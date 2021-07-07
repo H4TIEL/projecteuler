@@ -18,21 +18,11 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def is_prime_number(n: int) -> bool:
-    if n <= 1:
-        return False
-    for i in range(2, math.floor(math.sqrt(n))):
-        if n % i == 0:
-            return False
-
-    return True
-
-
 def gen_primes(n: int) -> list[int]:
     primes = [2, 3, 5]
     i = 1
     # increment by check 6k+1 or 6k+5
-    while len(primes) < n:
+    while primes[-1] < n:
         x = 6 * i + 1
         y = 6 * i + 5
         if is_prime(x):
@@ -51,10 +41,21 @@ def upper_bound_nth_prime(n: int) -> float:
     return n * (math.log(n) + math.log(math.log(n)))
 
 
+def is_prime_number(n: int) -> bool:
+    if n <= 1:
+        return False
+    for i in range(2, math.floor(math.sqrt(n))):
+        if n % i == 0:
+            return False
+
+    return True
+
+
 if __name__ == '__main__':
     start_time = time.time_ns()
-    limit = 10001
+    limit = 2000000
     primes_list = gen_primes(limit)
-    print(primes_list[-1])
+    primes_list.pop()
+    print(sum(primes_list))
     end_time = time.time_ns()
     print(end_time - start_time, 'ns')
